@@ -2,12 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\language\LanguageController;
-use App\Http\Controllers\pages\HomePage;
-use App\Http\Controllers\pages\Page2;
+use App\Http\Controllers\pages\HomeController;
+use App\Http\Controllers\pages\CreateController;
 use App\Http\Controllers\pages\MiscError;
 use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\ComplianceDepartmentController;
 use App\Http\Controllers\authentications\RegisterBasic;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,8 +38,13 @@ Route::middleware([
 
   // Main Page Route
 
-  Route::get('/', [HomePage::class, 'index'])->name('pages-home');
-  Route::get('/page-2', [Page2::class, 'index'])->name('pages-page-2');
-  Route::post('/saveDepartment', [Page2::class, 'storeDepartment'])->name('departments.store');
-  Route::get('/showDepartment/{id}', [Page2::class, 'showDepartment'])->name('departments.show');
+  Route::get('/', [HomeController::class, 'index'])->name('home');
+  Route::get('/page-2', [CreateController::class, 'index'])->name('pages-page2');
+  Route::post('/saveDocument', [CreateController::class, 'storeDocument'])->name('documents.store');
+  Route::post('/saveDepartment', [CreateController::class, 'storeDepartment'])->name('departments.store');
+  Route::post('/saveRegulation', [CreateController::class, 'storeRegulation'])->name('regulations.store');
+
+  Route::get('/regulations/{id}', [CreateController::class, 'showRegulation'])->name('regulations.show');
+  Route::get('/showDocument/{id}', [CreateController::class, 'showDocument'])->name('documents.show');
+  Route::get('/showDepartment/{id}', [CreateController::class, 'showDepartment'])->name('departments.show');
 });

@@ -17,7 +17,7 @@
 
                         <!-- Add more details if needed -->
                         <div class="mt-3">
-                            <a href="{{ route('pages-page-2') }}" class="btn btn-secondary">Back to Departments</a>
+                            <a href="{{ route('home') }}" class="btn btn-secondary">Back to Departments</a>
                             <!-- Add edit and delete buttons if needed -->
                         </div>
                     </div>
