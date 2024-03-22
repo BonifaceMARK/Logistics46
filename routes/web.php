@@ -6,6 +6,7 @@ use App\Http\Controllers\pages\HomePage;
 use App\Http\Controllers\pages\Page2;
 use App\Http\Controllers\pages\MiscError;
 use App\Http\Controllers\authentications\LoginBasic;
+use App\Http\Controllers\ComplianceDepartmentController;
 use App\Http\Controllers\authentications\RegisterBasic;
 
 /*
@@ -35,6 +36,9 @@ Route::middleware([
   })->name('dashboard');
 
   // Main Page Route
+
   Route::get('/', [HomePage::class, 'index'])->name('pages-home');
   Route::get('/page-2', [Page2::class, 'index'])->name('pages-page-2');
+  Route::post('/saveDepartment', [Page2::class, 'storeDepartment'])->name('departments.store');
+  Route::get('/showDepartment/{id}', [Page2::class, 'showDepartment'])->name('departments.show');
 });
