@@ -42,6 +42,6 @@ Route::middleware([
   Route::get('/page-2', [CreateController::class, 'index'])->name('pages-page2');
 
   Route::post('/chat', [CreateController::class, 'Message'])->name('chat.store');
-  Route::get('/communication', [CreateController::class, 'fetchMessage']);
-  Route::get('/fetch-messages', [ApiController::class, 'updateMessage'])->name('fetch.messages');
+  Route::get('/chatLms46', [CreateController::class, 'fetchMessage']);
+  Route::get('/fetchLms46', [ApiController::class, 'updateMessage'])->name('fetch.messages');
 });
