@@ -11,131 +11,31 @@
 
     <div class="container">
         <div class="card">
-            <div class="card-header">Regulations</div>
-            <div class="card-body">
+
+            <!-- Card with an image on top -->
+            <div class="card">
+                <img src="{{ asset('assets/img/ediprocess.png') }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Electronic Data Intercharge</strong></h5>
+                    <p class="card-text">Electronic Data Interchange (EDI) is a method of exchanging business documents
+                        between organizations in a standardized electronic format. These documents can include purchase
+                        orders, invoices, shipping notices, and more. Instead of relying on paper-based documents that are
+                        prone to errors, delays, and manual processing, EDI enables the seamless exchange of structured data
+                        directly between computer systems.</p>
+                </div>
 
 
-                @if ($regulations->isEmpty())
-                    <p>No regulations found.</p>
-                @else
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Jurisdiction</th>
-                                <th>Category</th>
-                                <th>Description</th>
-                                <th>Created At</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($regulations as $regulation)
-                                <tr>
-                                    <td>{{ $regulation->title }}</td>
-                                    <td>{{ $regulation->jurisdiction }}</td>
-                                    <td>{{ $regulation->category }}</td>
-                                    <td>{{ $regulation->description }}</td>
-                                    <td>{{ $regulation->created_at }}</td>
-                                    <td>
-                                        <a href="{{ route('regulations.show', $regulation->id) }}" class="btn btn-primary"><i
-                                                class="fa-solid fa-print"></i></a>
-                                        <!-- Add Edit and Delete buttons here if needed -->
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endif
-            </div>
-        </div>
-    </div>
+            </div><!-- End Card with an image on top -->
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">Departments</div>
-
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Contact Person</th>
-                                    <th>Contact Email</th>
-                                    <th>Contact Phone</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($departments as $department)
-                                    <tr>
-                                        <td>{{ $department->department_id }}</td>
-                                        <td>{{ $department->name }}</td>
-                                        <td>{{ $department->contact_person }}</td>
-                                        <td>{{ $department->contact_email }}</td>
-                                        <td>{{ $department->contact_phone }}</td>
-                                        <td>
-                                            <a href="{{ route('departments.show', $department) }}"
-                                                class="btn btn-sm btn-primary"><i class="fa-solid fa-print"></i></a>
-                                            <!-- Add buttons for edit and delete if needed -->
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="6">No departments found.</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="card">
+                <div class="card-body pdf-viewer">
+                    <h4 class="card-title"><strong>American National Standards Institute (ANSI) Accredited Standards
+                            Committee (ASC) X12.</strong></h4>
+                    <iframe src="{{ asset('assets/img/ansi.pdf') }}" width="100%" height="600px" frameborder="0"></iframe>
                 </div>
             </div>
+
+
         </div>
     </div>
-
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">Compliance Documents</div>
-
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Document Type</th>
-                                    <th>Upload Date</th>
-                                    <th>Expiration Date</th>
-                                    <th>Related Regulation ID</th>
-                                    <th>Actions</th> <!-- New column for actions -->
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($documents as $document)
-                                    <tr>
-                                        <td>{{ $document->document_id }}</td>
-                                        <td>{{ $document->title }}</td>
-                                        <td>{{ $document->document_type }}</td>
-                                        <td>{{ $document->upload_date }}</td>
-                                        <td>{{ $document->expiration_date }}</td>
-                                        <td>{{ $document->related_regulation_id }}</td>
-                                        <td>
-                                            <a href="{{ route('documents.show', $document->id) }}"
-                                                class="btn btn-primary"><i class="fa-solid fa-print"></i></a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 @endsection

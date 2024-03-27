@@ -40,11 +40,5 @@ Route::middleware([
 
   Route::get('/', [HomeController::class, 'index'])->name('home');
   Route::get('/page-2', [CreateController::class, 'index'])->name('pages-page2');
-  Route::post('/saveDocument', [CreateController::class, 'storeDocument'])->name('documents.store');
-  Route::post('/saveDepartment', [CreateController::class, 'storeDepartment'])->name('departments.store');
-  Route::post('/saveRegulation', [CreateController::class, 'storeRegulation'])->name('regulations.store');
 
-  Route::get('/regulations/{id}', [CreateController::class, 'showRegulation'])->name('regulations.show');
-  Route::get('/showDocument/{id}', [CreateController::class, 'showDocument'])->name('documents.show');
-  Route::get('/showDepartment/{id}', [CreateController::class, 'showDepartment'])->name('departments.show');
 });
