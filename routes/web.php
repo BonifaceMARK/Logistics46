@@ -6,7 +6,7 @@ use App\Http\Controllers\pages\HomeController;
 use App\Http\Controllers\pages\CreateController;
 use App\Http\Controllers\pages\MiscError;
 use App\Http\Controllers\authentications\LoginBasic;
-use App\Http\Controllers\ComplianceDepartmentController;
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\authentications\RegisterBasic;
 
 
@@ -41,4 +41,7 @@ Route::middleware([
   Route::get('/', [HomeController::class, 'index'])->name('home');
   Route::get('/page-2', [CreateController::class, 'index'])->name('pages-page2');
 
+  Route::post('/chat', [CreateController::class, 'Message'])->name('chat.store');
+  Route::get('/communication', [CreateController::class, 'fetchMessage']);
+  Route::get('/fetch-messages', [ApiController::class, 'updateMessage'])->name('fetch.messages');
 });
