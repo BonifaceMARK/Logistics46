@@ -29,7 +29,7 @@
                     <div class="container">
                         <div class="card">
                             <div class="card-body">
-                                <h1 class="card-title">Transaction List</h1>
+                                <h1 class="card-title">Documentation</h1>
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <thead>
@@ -38,10 +38,8 @@
                                                 <th>Transaction Name</th>
                                                 <th>Transaction Type</th>
                                                 <th>Transaction Amount</th>
-
                                                 <th>Reason For Cancellation</th>
                                                 <th>Created At</th>
-
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -52,10 +50,8 @@
                                                     <td>{{ $transaction['transactionName'] }}</td>
                                                     <td>{{ $transaction['transactionType'] }}</td>
                                                     <td>{{ $transaction['transactionAmount'] }}</td>
-
                                                     <td>{{ $transaction['reasonForCancellation'] }}</td>
                                                     <td>{{ $transaction['created_at'] }}</td>
-
                                                     <td>
                                                         <!-- Button to trigger modal -->
                                                         <button type="button" class="btn btn-primary"
@@ -63,7 +59,6 @@
                                                             data-bs-target="#transactionModal{{ $transaction['id'] }}">
                                                             Open Transaction Details
                                                         </button>
-
                                                         <div class="modal fade"
                                                             id="transactionModal{{ $transaction['id'] }}" tabindex="-1"
                                                             aria-labelledby="transactionModalLabel{{ $transaction['id'] }}"
@@ -85,8 +80,7 @@
                                                                             <div class="row">
                                                                                 <div class="col-md-6">
                                                                                     <h6>Invoice ID:
-                                                                                        {{ $transaction['id'] }}
-                                                                                    </h6>
+                                                                                        {{ $transaction['id'] }}</h6>
                                                                                     <p>Transaction Date:
                                                                                         {{ $transaction['transactionDate'] }}
                                                                                     </p>
@@ -146,7 +140,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -157,6 +150,7 @@
                         </div>
                     </div>
                 </section>
+
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
                 <script>
                     var downloadCounter = 1; // Initialize counter
@@ -188,7 +182,118 @@
                         <div class="card-body">
                             <h5 class="card-title">Company Checklist</h5>
 
-
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-12">
+                                        <ul class="nav nav-tabs" id="checklistTabs" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="approved-tab" data-bs-toggle="tab"
+                                                    href="#approved" role="tab" aria-controls="approved"
+                                                    aria-selected="true">Approved</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="rejected-tab" data-bs-toggle="tab" href="#rejected"
+                                                    role="tab" aria-controls="rejected"
+                                                    aria-selected="false">Rejected</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="complied-tab" data-bs-toggle="tab" href="#complied"
+                                                    role="tab" aria-controls="complied"
+                                                    aria-selected="false">Complied</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content" id="checklistTabsContent">
+                                            <div class="tab-pane fade show active" id="approved" role="tabpanel"
+                                                aria-labelledby="approved-tab">
+                                                <div class="card mt-3">
+                                                    <div class="card-header">Approved Checklists</div>
+                                                    <div class="card-body">
+                                                        <ul class="list-group">
+                                                            @forelse($approvedChecklists as $checklist)
+                                                                <li class="list-group-item">
+                                                                    <strong>Department:</strong>
+                                                                    {{ $checklist->department }}
+                                                                    <br>
+                                                                    <strong>Status:</strong>
+                                                                    {{ ucfirst($checklist->status) }}
+                                                                    <br>
+                                                                    <strong>Checked:</strong>
+                                                                    <ul>
+                                                                        @foreach ($checklist->checklist_items as $item)
+                                                                            <li>{{ $item }}</li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </li>
+                                                            @empty
+                                                                <li class="list-group-item">No approved checklist items
+                                                                    found.</li>
+                                                            @endforelse
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="rejected" role="tabpanel"
+                                                aria-labelledby="rejected-tab">
+                                                <div class="card mt-3">
+                                                    <div class="card-header">Rejected Checklists</div>
+                                                    <div class="card-body">
+                                                        <ul class="list-group">
+                                                            @forelse($rejectedChecklists as $checklist)
+                                                                <li class="list-group-item">
+                                                                    <strong>Department:</strong>
+                                                                    {{ $checklist->department }}
+                                                                    <br>
+                                                                    <strong>Status:</strong>
+                                                                    {{ ucfirst($checklist->status) }}
+                                                                    <br>
+                                                                    <strong>Checked:</strong>
+                                                                    <ul>
+                                                                        @foreach ($checklist->checklist_items as $item)
+                                                                            <li>{{ $item }}</li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </li>
+                                                            @empty
+                                                                <li class="list-group-item">No rejected checklist items
+                                                                    found.</li>
+                                                            @endforelse
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="complied" role="tabpanel"
+                                                aria-labelledby="complied-tab">
+                                                <div class="card mt-3">
+                                                    <div class="card-header">Complied Checklists</div>
+                                                    <div class="card-body">
+                                                        <ul class="list-group">
+                                                            @forelse($compliedChecklists as $checklist)
+                                                                <li class="list-group-item">
+                                                                    <strong>Department:</strong>
+                                                                    {{ $checklist->department }}
+                                                                    <br>
+                                                                    <strong>Status:</strong>
+                                                                    {{ ucfirst($checklist->status) }}
+                                                                    <br>
+                                                                    <strong>Checked:</strong>
+                                                                    <ul>
+                                                                        @foreach ($checklist->checklist_items as $item)
+                                                                            <li>{{ $item }}</li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </li>
+                                                            @empty
+                                                                <li class="list-group-item">No complied checklist items
+                                                                    found.</li>
+                                                            @endforelse
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <!-- Checklist Form -->
                             <form action="{{ route('checklist.store') }}" method="POST">
@@ -473,64 +578,7 @@
                     </div><!-- End Card -->
                 </div><!-- End Container -->
 
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card mt-5">
-                                <div class="card-header bg-dark text-white">
-                                    <h5 class="card-title mb-0">Approved Checklist Items (Balance Sheet)</h5>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="list-group">
-                                        @foreach ($approvedChecklistItems as $item)
-                                            <li class="list-group-item">
-                                                <strong>Item:</strong> {{ $item->item }}<br>
-                                                <strong>Department:</strong> {{ $item->department }}<br>
-                                                <strong>Status:</strong> Approved
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card mt-5">
-                                <div class="card-header bg-danger text-white">
-                                    <h5 class="card-title mb-0">Rejected Checklist Items</h5>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="list-group">
-                                        @foreach ($rejectedChecklistItems as $item)
-                                            <li class="list-group-item">
-                                                <strong>Item:</strong> {{ $item->item }}<br>
-                                                <strong>Department:</strong> {{ $item->department }}<br>
-                                                <strong>Status:</strong> Rejected
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card mt-5">
-                                <div class="card-header bg-success text-white">
-                                    <h5 class="card-title mb-0">Complied Checklist Items</h5>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="list-group">
-                                        @foreach ($compliedChecklistItems as $item)
-                                            <li class="list-group-item">
-                                                <strong>Item:</strong> {{ $item->item }}<br>
-                                                <strong>Department:</strong> {{ $item->department }}<br>
-                                                <strong>Status:</strong> Complied
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
     </section>
 
 
