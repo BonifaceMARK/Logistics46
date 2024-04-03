@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Checklist extends Model
 {
-    protected $fillable = ['department', 'checklist_items', 'status'];
+    protected $fillable = ['department', 'documentation_name', 'checklist_item', 'status', 'notes'];
 
-    protected $casts = [
-        'checklist_items' => 'array',
-    ];
+
 }

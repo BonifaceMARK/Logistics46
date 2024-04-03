@@ -7,5 +7,16 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 class ApiController extends Controller
 {
+    function fetchPaymentData() {
+        $response = Http::get('https://fms5-iasipgcc.fguardians-fms.com/payment');
 
+        // Check if the request was successful
+        if ($response->successful()) {
+            // Return the response body (JSON, XML, etc.)
+            return $response->body();
+        } else {
+            // If the request failed, return null or handle the error as needed
+            return null;
+        }
+    }
 }

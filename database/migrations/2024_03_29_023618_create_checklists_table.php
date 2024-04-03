@@ -16,8 +16,10 @@ class CreateChecklistsTable extends Migration
         Schema::create('checklists', function (Blueprint $table) {
             $table->id();
             $table->string('department');
-            $table->json('checklist_items');
+            $table->string('documentation_name');
+            $table->text('checklist_item');
             $table->enum('status', ['approve', 'reject', 'comply']);
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

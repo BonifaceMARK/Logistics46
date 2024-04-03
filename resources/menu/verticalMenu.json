@@ -3,7 +3,8 @@
     {
       "url": "/",
       "name": "Home",
-      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "icon": "menu-icon fa fa-dashboard"
+,
       "slug": "pages-home"
     },
     {

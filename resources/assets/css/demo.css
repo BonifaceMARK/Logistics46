@@ -146,3 +146,21 @@
   text-align: center;
   margin-top: 1rem;
 }
+.document-container {
+  padding: 20px;
+  background-color: #f7f7f7;
+}
+.document-section {
+  margin-bottom: 20px;
+}
+.document-section-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.document-field {
+  margin-bottom: 10px;
+}
+.document-field label {
+  font-weight: bold;
+}

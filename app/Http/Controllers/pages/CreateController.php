@@ -21,74 +21,38 @@ class CreateController extends Controller
 
   public function index()
   {
-      // Initialize transactions variable
-      $transactions = [];
-
-      // Make a GET request to fetch all transactions
-      $response = Http::get('https://fms5-iasipgcc.fguardians-fms.com/payment');
-
-      // Check if the request was successful
-      if ($response->successful()) {
-          // Extract the JSON data from the response
-          $transactions = $response->json();
-      }
-
-      // Fetch other checklist data regardless of the success of the API request
-      $approvedChecklists = Checklist::where('status', 'approve')->get();
-      $rejectedChecklists = Checklist::where('status', 'reject')->get();
-      $compliedChecklists = Checklist::where('status', 'comply')->get();
-
-
-
-      // Return the view with the data
-      return view('content.pages.createdash', compact('transactions', 'approvedChecklists', 'rejectedChecklists', 'compliedChecklists'));
+    $checklists = Checklist::all();
+    return view('content.pages.createdash', compact('checklists'));
   }
 
 
-
-
-  public function showPayment($id)
-  {
-      // Make a GET request to fetch the transaction details by ID
-      $response = Http::get('https://fms5-iasipgcc.fguardians-fms.com/payment/' . $id);
-
-      // Check if the request was successful
-      if ($response->successful()) {
-          // Extract the JSON data from the response
-          $transaction = $response->json();
-
-          // Return the view with the transaction data
-          return view('content.pages.createdash', compact('transaction'));
-      } else {
-          // Handle the case where the request was not successful
-          return response()->json(['error' => 'Failed to fetch transaction details from the external API'], $response->status());
-      }
-  }
 
   public function storeChecklist(Request $request)
   {
-      // Validate the request data
-      $validatedData = $request->validate([
-          'department' => 'required',
-          'checklist_items' => 'required|array',
-          'status' => 'required|in:approve,reject,comply',
-      ]);
+          // Validate the request data
+          $validatedData = $request->validate([
+            'department' => 'required|string|max:255',
+            'documentation_name' => 'required|string|max:255',
+            'checklist_item' => 'required|string|max:255',
+            'status' => 'required|in:approve,reject,comply',
+            'notes' => 'nullable|string|max:255',
+        ]);
 
-      // Create a new checklist item
-      $checklist = Checklist::create([
-          'department' => $validatedData['department'],
-          'checklist_items' => $validatedData['checklist_items'],
-          'status' => $validatedData['status'],
-      ]);
+        // Create a new checklist instance
+        $checklist = new Checklist([
+            'department' => $validatedData['department'],
+            'documentation_name' => $validatedData['documentation_name'],
+            'checklist_item' => $validatedData['checklist_item'],
+            'status' => $validatedData['status'],
+            'notes' => $validatedData['notes'],
+        ]);
 
-      // Fetch other checklist data regardless of the success of the API request
-      $transactions = Http::get('https://fms5-iasipgcc.fguardians-fms.com/payment')->json();
-      $approvedChecklists = Checklist::where('status', 'approve')->get();
-      $rejectedChecklists = Checklist::where('status', 'reject')->get();
-      $compliedChecklists = Checklist::where('status', 'comply')->get();
+        // Save the checklist to the database
+        $checklist->save();
+
 
       // Return the view with the created checklist item and other data
-      return view('content.pages.createdash', compact('checklist', 'transactions', 'approvedChecklists', 'rejectedChecklists', 'compliedChecklists'));
+      return view('content.pages.createdash', compact('checklist'));
   }
 
 }
