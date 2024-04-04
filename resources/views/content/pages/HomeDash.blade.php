@@ -20,55 +20,137 @@
 
 
                   </div>
+
+                  <div class="row">
+
+
+                </div>
+
+
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="carDeliveredModal" tabindex="-1" role="dialog" aria-labelledby="carDeliveredModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="carDeliveredModalLabel">Car Delivered</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <ul class="timeline mb-0 pb-1">
+                                    @foreach($drivers as $driver)
+                                    <li class="timeline-item ps-4 border-left-dashed pb-1">
+                                        <span class="timeline-indicator-advanced timeline-indicator-success">
+                                            <i class="ti ti-circle-check"></i>
+                                        </span>
+                                        <div class="timeline-event px-0 pb-0">
+                                            <div class="timeline-header">
+                                                <small class="text-success text-uppercase fw-medium">VEHICLE</small>
+                                            </div>
+                                            <h6 class="mb-1">{{ $driver['vehicle_brand'] }}</h6>
+                                            <p class="text-muted mb-0">Plate Number: {{ $driver['plate_number'] }}</p>
+                                            <p class="text-muted mb-0">Load Capacity: {{ $driver['load_capacity'] }}</p>
+                                        </div>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                   <!-- Button to trigger the modal -->
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pdfModal">
-                      Ansi-X12
-                  </button>
+
               </div>
           </div>
-          <div class="card-body">
-              <div class="row">
-                  <div class="col-md-3 mb-4">
-                      <div class="card">
-                          <div class="card-header">
-                              <h5 class="card-title m-0">Car Delivered</h5>
-                          </div>
-                          <div class="card-body">
-                              <ul class="timeline mb-0 pb-1">
-                                  @foreach($drivers as $driver)
-                                  <li class="timeline-item ps-4 border-left-dashed pb-1">
-                                      <span class="timeline-indicator-advanced timeline-indicator-success">
-                                          <i class="ti ti-circle-check"></i>
-                                      </span>
-                                      <div class="timeline-event px-0 pb-0">
-                                          <div class="timeline-header">
-                                              <small class="text-success text-uppercase fw-medium">VEHICLE</small>
-                                          </div>
-                                          <h6 class="mb-1">{{ $driver['vehicle_brand'] }}</h6>
-                                          <p class="text-muted mb-0">Plate Number: {{ $driver['plate_number'] }}</p>
-                                          <p class="text-muted mb-0">Load Capacity: {{ $driver['load_capacity'] }}</p>
-                                      </div>
-                                  </li>
-                                  @endforeach
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
+          <div class="card-body"  style="background-image: url('{{ asset('assets/img/dash1.jpg') }}'); background-size: cover; background-position: center;">
+           <br>
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <div class="card card-border-shadow-primary">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2 pb-1">
+                            <div class="avatar me-2">
+                                <span class="avatar-initial rounded bg-label-primary"><i class="ti ti-truck ti-md"></i></span>
+                            </div>
+                            <h4 class="ms-1 mb-0">{{ count($drivers) }}</h4>
+                        </div>
+                        <p class="mb-1">On route drivers</p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#carDeliveredModal">
+                          View
+                      </button>
+                    </div>
+                </div>
+            </div>
 
-                  <div class="col-md-3 mb-3">
-                      <div class="card card-border-shadow-primary">
-                          <div class="card-body">
-                              <div class="d-flex align-items-center mb-2 pb-1">
-                                  <div class="avatar me-2">
-                                      <span class="avatar-initial rounded bg-label-primary"><i class="ti ti-truck ti-md"></i></span>
-                                  </div>
-                                  <h4 class="ms-1 mb-0">{{ count($drivers) }}</h4>
-                              </div>
-                              <p class="mb-1">On route drivers</p>
-                          </div>
-                      </div>
+                  <div class="col-md-12 mb-12">
+                  <div class="card">
+                    <div class="card-body">
+                        <!-- Container for the chart -->
+                        <div id="chart"></div>
+                    </div>
                   </div>
+                </div>
+
               </div><!-- End Row -->
+               <!-- Container for the chart -->
+
+
+               <script>
+                // Define a function to render the chart
+                function renderChart() {
+                    // Chart data passed from controller
+                    const vehicleBrands = @json($vehicleBrands);
+                    const loadCapacities = @json($loadCapacities);
+
+                    // Create chart options
+                    const options = {
+                        chart: {
+                            type: 'bar'
+                        },
+                        series: [{
+                            name: 'Load Capacity',
+                            data: loadCapacities
+                        }],
+                        xaxis: {
+                            categories: vehicleBrands,
+                            title: {
+                                text: 'Vehicle Brands'
+                            }
+                        },
+                        yaxis: {
+                            title: {
+                                text: 'Load Capacity'
+                            }
+                        },
+                        title: {
+                            text: 'Vehicle Load Capacities'
+                        }
+                    };
+
+                    // Initialize the chart with options
+                    const chart = new ApexCharts(document.querySelector("#chart"), options);
+
+                    // Render the chart
+                    chart.render();
+                }
+
+                // Check if ApexCharts is loaded, then render the chart
+                if (typeof ApexCharts === 'undefined') {
+                    // If ApexCharts is not loaded, wait for it to load
+                    document.addEventListener('apexcharts:loaded', renderChart);
+                } else {
+                    // If ApexCharts is already loaded, render the chart immediately
+                    renderChart();
+                }
+            </script>
+
           </div><!-- End Card Body -->
       </div><!-- End Card -->
   </div><!-- End Col -->
@@ -79,7 +161,6 @@
   <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="pdfModalLabel">Compliance Standards</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
               </button>

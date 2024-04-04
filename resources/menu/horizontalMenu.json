@@ -2,14 +2,18 @@
   "menu": [
     {
       "url": "/",
-      "name": "Home",
-      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "name": "Dashboard",
+      "icon": "menu-icon fas fa-chart-bar"
+
+
+      ,
       "slug": "pages-home"
     },
     {
       "url": "page-2",
-      "icon": "menu-icon tf-icons ti ti-user",
-      "name": "User Dashboard",
+      "icon": "menu-icon fas fa-check"
+,
+      "name": "Compliance",
       "slug": "pages-page-2"
     }
   ]

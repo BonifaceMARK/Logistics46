@@ -7,7 +7,28 @@
 @section('title', 'User Dashboard')
 
 @section('content')
-
+<!-- Modal -->
+<div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="pdfModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <div class="card">
+                  <div class="card-body pdf-viewer">
+                      <h4 class="card-title">
+                          American National Standards Institute (ANSI) Accredited Standards Committee (ASC) X12.
+                      </h4>
+                      <iframe src="{{ asset('assets/img/ansi.pdf') }}" width="100%" height="600px" frameborder="0"></iframe>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
@@ -28,8 +49,18 @@
                 @endif
                 <div class="container">
                   <div class="card">
+
                       <div class="card-body">
                           <h1 class="card-title">Documentation and Compliance</h1>
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pdfModal">
+                            View
+                        </button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#rulesModal">
+                          View Rules & Regulations
+                        </button>
+
+
+              </div>
                           <div class="table-responsive">
                               <table class="table">
                                   <thead>
@@ -85,9 +116,7 @@
                                   <div class="card">
                                       <div class="card-body">
                                           <h5 class="card-title"><!-- Button to trigger modal -->
-                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#rulesModal">
-                                              View Rules & Regulations
-                                            </button></h5>
+                                            </h5>
 
                                             <div class="mb-3">
                                               <label for="department" class="form-label">Department</label>
