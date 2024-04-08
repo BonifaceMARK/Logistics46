@@ -21,7 +21,13 @@
   width: 34px;
   height: 24px;
 }
-
+.violet-text-shadow {
+  font-size: 80px;
+  color: white;
+  text-shadow: 0 0 10px rgb(110, 82, 175); /* Violet shadow */
+  padding: 10px; /* Padding around the text */
+  display: inline-block; /* Ensures that the border is around each letter */
+}
 .app-brand-logo.demo svg {
   width: 35px;
   height: 24px;

@@ -6,6 +6,13 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts"></link>
 <!-- Include ApexCharts JavaScript file -->
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap JS (optional, only needed if using modal) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap JS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 @vite(['resources/assets/vendor/fonts/tabler-icons.scss',
 'resources/assets/vendor/fonts/fontawesome.scss',

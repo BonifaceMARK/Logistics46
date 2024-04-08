@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use App\Models\Checklist;
 class ApiController extends Controller
 {
     function fetchPaymentData() {
@@ -18,5 +19,13 @@ class ApiController extends Controller
             // If the request failed, return null or handle the error as needed
             return null;
         }
+    }
+    public function checklistApi()
+    {
+        // Fetch all the checklist data
+        $checklistData = Checklist::all();
+
+        // Return the data as JSON
+        return response()->json($checklistData);
     }
 }

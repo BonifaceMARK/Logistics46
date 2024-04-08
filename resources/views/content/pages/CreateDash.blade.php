@@ -58,7 +58,42 @@
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#rulesModal">
                           View Rules & Regulations
                         </button>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Launch Process Logistics Transaction Modal
+  </button>
 
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Process Logistics Transaction to EDI</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="{{ route('edi.process') }}">
+            @csrf
+
+            <div class="form-group">
+              <label for="transaction_data">Logistics Transaction Data</label>
+              <textarea id="transaction_data" class="form-control @error('transaction_data') is-invalid @enderror" name="transaction_data" required autofocus></textarea>
+
+              @error('transaction_data')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+            </div>
+
+            <button type="submit" class="btn btn-primary">Process to EDI</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
               </div>
                           <div class="table-responsive">

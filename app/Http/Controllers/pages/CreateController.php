@@ -12,8 +12,9 @@ use App\Models\Checklist;
 use Illuminate\Support\Facades\Http;
 use League\Csv\Writer;
 use Intervention\Image\Facades\Image;
-
-
+use App\Models\EDITranslator;
+use EDI\Mapper\Mapping;
+use EDI\Mapper\MappingFactory;
 
 
 class CreateController extends Controller
@@ -21,9 +22,11 @@ class CreateController extends Controller
 
   public function index()
   {
+
     $checklists = Checklist::all();
     return view('content.pages.createdash', compact('checklists'));
   }
+
 
 
 
