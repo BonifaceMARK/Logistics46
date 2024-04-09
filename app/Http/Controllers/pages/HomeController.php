@@ -35,43 +35,35 @@ class HomeController extends Controller
             }
         }
     }
-
     public function vehicleToEDIFACT(Request $request)
     {
-        // Fetch the vehicle data from the request
+        // Retrieve the vehicle data from the request
         $vehicleData = $request->input('vehicle');
 
-        // Check if vehicleData is properly received
-        dd($vehicleData);
+        // Example: Convert the vehicle details into an EDIFACT-like message
+        $edifactData = "UNA:+.? '"; // UNA segment defines delimiters
+        $edifactData .= "UNB+UNOA:2+SENDER+RECEIVER+YYMMDD:HHMM+0001++++++EDIFACT'";
+        $edifactData .= "UNH+1+ORDERS:D:96A:UN:EAN008'";
+        $edifactData .= "BGM+220+ORDERREFERENCE+9'";
+        $edifactData .= "DTM+4:20220409:102'";
+        $edifactData .= "NAD+BY+123456789::9'";
+        $edifactData .= "LIN+1++ITEM1'";
+        $edifactData .= "QTY+21:1'";
+        $edifactData .= "FTX+AAA+++Vehicle Details'";
+        $edifactData .= "RFF+PD:V123'";
+        // Include vehicle details in the EDIFACT message
+        $edifactData .= "LOC+VES+{$vehicleData['id']}+{$vehicleData['vehicle_id']}+{$vehicleData['vehicle_brand']}+{$vehicleData['year_model']}+{$vehicleData['vehicle_type']}+{$vehicleData['plate_number']}+{$vehicleData['load_capacity']}+{$vehicleData['status']}'";
+        $edifactData .= "UNT+9+1'";
+        $edifactData .= "UNZ+1+0001'";
 
-        // Convert the vehicle data to EDIFACT format
-        $edifactFLEET = $this->vehicleDELIVERY($vehicleData);
-
-        // Return the EDIFACT data
-        return response()->json(['edifact' => $edifactFLEET]);
+        // Return the EDIFACT-like data
+        return response()->json([
+            'success' => true,
+            'edifact' => $edifactData,
+        ]);
     }
 
 
-    private function vehicleDELIVERY($vehicleData)
-    {
-        // Construct EDIFACT message using vehicle data
-        $edifactMessage = "UNA:+.? '"; // Service String Advice (SSA)
-        $edifactMessage .= "UNB+UNOA:1+SENDERID+RECEIVERID+210101:1234+000000123'"; // Interchange Header
-        $edifactMessage .= "UNH+0001+DELFOR:D:96A:UN:EAN008'"; // Message Header (Changed INVOIC to DELFOR for delivery)
-        $edifactMessage .= "BGM+351+Delivery instruction'"; // Beginning of Message (Changed 380 to 351 for delivery instruction)
-        $edifactMessage .= "DTM+137:{$vehicleData['created_at']}"; // Date/time of the message
-        $edifactMessage .= "LIN+1++{$vehicleData['vehicle_id']}:EN'";
-        $edifactMessage .= "PIA+1+VP:{$vehicleData['vehicle_id']}"; // Additional Product ID
-        $edifactMessage .= "MEA+WT+G+KGM:{$vehicleData['load_capacity']}'"; // Measurement
-        $edifactMessage .= "FTX+AAA++::{$vehicleData['vehicle_brand']} {$vehicleData['year_model']} {$vehicleData['vehicle_type']}'"; // Free Text
-        $edifactMessage .= "RFF+ON:{$vehicleData['plate_number']}'"; // Reference
-        $edifactMessage .= "UNS+S'"; // Section Control
-        $edifactMessage .= "CNT+2:1'"; // Control total
-        $edifactMessage .= "UNT+13+0001'"; // Message Trailer
-        $edifactMessage .= "UNZ+1+000000123'"; // Interchange Trailer
-
-        return $edifactMessage;
-    }
 
     public function processToEDIFACT(Request $request)
     {

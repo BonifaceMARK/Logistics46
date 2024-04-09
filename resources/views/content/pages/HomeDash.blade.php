@@ -132,52 +132,46 @@
                 <!-- Add more vehicle details as needed -->
             </div>
             <div class="modal-footer">
-                <!-- Pass the vehicle ID to the vehicleToEDIFACT function -->
-                <button type="button" class="btn btn-primary" onclick="vehicleToEDIFACT('{{ $vehicle['id'] }}')">Process EDI</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="processEDIFACT({{ $vehicle['id'] }})">Process to EDIFACT</button>
             </div>
         </div>
     </div>
 </div>
-@endforeach
 
 <script>
-    function vehicleToEDIFACT(vehicleId) {
-        // Retrieve vehicle data from the modal
-        var vehicleData = {
-            id: $('#vehicleModal' + vehicleId + ' strong:contains("ID")').next().text(),
-            vehicle_id: $('#vehicleModal' + vehicleId + ' strong:contains("Vehicle ID")').next().text(),
-            vehicle_brand: $('#vehicleModal' + vehicleId + ' strong:contains("Brand")').next().text(),
-            year_model: $('#vehicleModal' + vehicleId + ' strong:contains("Year Model")').next().text(),
-            vehicle_type: $('#vehicleModal' + vehicleId + ' strong:contains("Type")').next().text(),
-            plate_number: $('#vehicleModal' + vehicleId + ' strong:contains("Plate Number")').next().text(),
-            load_capacity: $('#vehicleModal' + vehicleId + ' strong:contains("Load Capacity")').next().text(),
-            status: $('#vehicleModal' + vehicleId + ' strong:contains("Status")').next().text(),
-            created_at: $('#vehicleModal' + vehicleId + ' strong:contains("Created At")').next().text(),
-            updated_at: $('#vehicleModal' + vehicleId + ' strong:contains("Updated At")').next().text()
-        };
+  function processToEDIFACT(vehicleId) {
+      // Fetch necessary data associated with the vehicle ID
+      var vehicleData = {
+          id: vehicleId,
+          // Add more data fields if needed
+      };
 
-        // Make AJAX request to process vehicle data into EDI format
-        $.ajax({
-            type: "POST",
-            url: "{{ route('vehicle.processToEDIFACT') }}", // Update URL as per your route
-            data: {
-        vehicle: vehicleData,
-        _token: $('meta[name="csrf-token"]').attr('content') // Include CSRF token
-    },
-            success: function(response) {
-                // Handle success response
-                alert('EDIFACT data processed successfully!');
-                console.log(response);
-            },
-            error: function(xhr, status, error) {
-                // Handle error response
-                alert('Error processing EDIFACT data. Please try again later.');
-                console.error(xhr.responseText);
-            }
-        });
-    }
+      // Send AJAX request to process vehicle into EDIFACT format
+      $.ajax({
+          type: "POST",
+          url: "{{ route('vehicles.processToEDIFACT') }}",
+          data: {
+              vehicle: vehicleData,
+              _token: '{{ csrf_token() }}'
+          },
+          success: function(response) {
+              // Display the EDIFACT data in a modal
+              $('#edifactModalContent').text(response.edifact);
+              $('#edifactModal').modal('show');
+          },
+          error: function(xhr, status, error) {
+              // Handle error response
+              console.error(xhr.responseText);
+              alert('Failed to process vehicle to EDIFACT format');
+          }
+      });
+  }
 </script>
+
+@endforeach
+
+
 
 
 
@@ -337,7 +331,7 @@
   <div class="modal-dialog modal-lg">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="chartModalLabel">Chart Modal</h5>
+              <h5 class="modal-title" id="chartModalLabel">Route Delivery Analytics</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">

@@ -45,8 +45,11 @@ Route::middleware([
 
   Route::get('/process-edi/{id}', [HomeController::class, 'processEDI'])->name('process.edi');
   Route::post('/transactions/process-edifact', [HomeController::class, 'processToEDIFACT'])->name('transactions.processToEDIFACT');
-  Route::post('/vehicle-to-edifact', [HomeController::class, 'vehicleToEDIFACT'])->name('vehicle.processToEDIFACT');
+  Route::post('/process-edifact', [HomeController::class, 'vehicleToEDIFACT'])->name('vehicles.processToEDIFACT');
+
   Route::get('/checkApi', [ApiController::class, 'checklistApi']);
+
+  Route::post('/process-edifact', [HomeController::class, 'process'])->name('process.edifact');
 
   Route::get('/fetch-data', [CreateController::class, 'fetch']);
   Route::get('/transactions/{id}',  [CreateController::class, 'showPayment'])->name('transactions.show');
