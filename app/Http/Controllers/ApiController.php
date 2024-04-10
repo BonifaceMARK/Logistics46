@@ -33,7 +33,7 @@ class ApiController extends Controller
 
     public function storeCert(Request $request)
     {
-        // Validate incoming request
+
         $request->validate([
             'company_name' => 'required|string',
             'company_address' => 'required|string',
@@ -47,7 +47,7 @@ class ApiController extends Controller
             'certificate_of_insurance_image' => 'nullable|string',
         ]);
 
-        // Create a new Carrier instance
+
         $carrier = new LmsG50Carrier();
         $carrier->company_name = $request->company_name;
         $carrier->company_address = $request->company_address;
@@ -60,10 +60,10 @@ class ApiController extends Controller
         $carrier->certificate_of_bir_image = $request->certificate_of_bir_image;
         $carrier->certificate_of_insurance_image = $request->certificate_of_insurance_image;
 
-        // Save the Carrier instance to the database
+
         $carrier->save();
 
-        // Return a success response
+
         return response()->json(['message' => 'Carrier created successfully'], 201);
     }
 }

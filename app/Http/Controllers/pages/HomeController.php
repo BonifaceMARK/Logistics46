@@ -28,10 +28,10 @@ class HomeController extends Controller
             if ($response->successful()) {
                 $transactions = $response->json();
 
-                return view('content.pages.homedash', compact('transactions','drivers', 'vehicleBrands', 'loadCapacities'));
+                return view('content.pages.HomeDash', compact('transactions','drivers', 'vehicleBrands', 'loadCapacities'));
             } else {
                 $errorMessage = $response->status() . ' - ' . $response->body();
-                return view('content.pages.homedash', compact('errorMessage'));
+                return view('content.pages.HomeDash', compact('errorMessage'));
             }
         }
     }

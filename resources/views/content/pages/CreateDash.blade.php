@@ -89,7 +89,7 @@
                               <td>{{ $transaction['transactionName'] }}</td>
                               <td>
                                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#transactionModal{{ $transaction['id'] }}">
-                                      View Details
+                                    <i class="fa-solid fa-bars"></i>
                                   </button>
                               </td>
                           </tr>
@@ -111,375 +111,223 @@
               View Rules & Regulations
           </button>
           <!-- Button trigger modal -->
-<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approvedCarriersModal">
-  View Approved Carriers
-</button>
-<!-- Button trigger modal for rejected carriers -->
-<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rejectedCarriersModal">
-  View Rejected Carriers
-</button>
-<!-- Button trigger modal for comply carriers -->
-<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#complyCarriersModal">
-  View Comply Carriers
-</button>
 
-<!-- Modal for comply carriers -->
-<div class="modal fade" id="complyCarriersModal" tabindex="-1" aria-labelledby="complyCarriersModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="complyCarriersModalLabel">Comply Carriers</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="container mt-4">
-          <div class="row row-cols-12 row-cols-md-12 g-12">
-            <!-- Display comply carriers -->
-            @foreach($complyCarriers as $carrier)
-            <div class="col">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">{{ $carrier->company_name }}</h5>
-                  <p class="card-text">Company Address: {{ $carrier->company_address }}</p>
-                  <p class="card-text">Contact Name: {{ $carrier->contact_name }}</p>
-                  <p class="card-text">Email: {{ $carrier->email }}</p>
-                  <p class="card-text">Phone: {{ $carrier->phone }}</p>
-                  <p class="card-text">Notes: {{ $carrier->notes ?? 'N/A' }}</p>
-                  <p class="card-text">Status: {{ $carrier->status }}</p>
-                  <hr>
-                  <p class="card-text">Certificate of Business Registration:</p>
-                  @if($carrier->certificate_of_business_registration_image)
-                    <img src="{{ $carrier->certificate_of_business_registration_image }}" alt="Certificate of Business Registration" style="max-width: 100%; height: auto;">
-                  @else
-                    <p>N/A</p>
-                  @endif
-                  <hr>
-                  <p class="card-text">Certificate of DTI:</p>
-                  @if($carrier->certificate_of_dti_image)
-                    <img src="{{ $carrier->certificate_of_dti_image }}" alt="Certificate of DTI" style="max-width: 100%; height: auto;">
-                  @else
-                    <p>N/A</p>
-                  @endif
-                  <hr>
-                  <p class="card-text">Business License:</p>
-                  @if($carrier->business_license_image)
-                    <img src="{{ $carrier->business_license_image }}" alt="Business License" style="max-width: 100%; height: auto;">
-                  @else
-                    <p>N/A</p>
-                  @endif
-                  <hr>
-                  <p class="card-text">Certificate of BIR:</p>
-                  @if($carrier->certificate_of_bir_image)
-                    <img src="{{ $carrier->certificate_of_bir_image }}" alt="Certificate of BIR" style="max-width: 100%; height: auto;">
-                  @else
-                    <p>N/A</p>
-                  @endif
-                  <hr>
-                  <p class="card-text">Certificate of Insurance:</p>
-                  @if($carrier->certificate_of_insurance_image)
-                    <img src="{{ $carrier->certificate_of_insurance_image }}" alt="Certificate of Insurance" style="max-width: 100%; height: auto;">
-                  @else
-                    <p>N/A</p>
-                  @endif
-                </div>
-              </div>
-            </div>
-            @endforeach
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- Modal for rejected carriers -->
-<div class="modal fade" id="rejectedCarriersModal" tabindex="-1" aria-labelledby="rejectedCarriersModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="rejectedCarriersModalLabel">Rejected Carriers</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="container mt-4">
-          <div class="row row-cols-12 row-cols-md-12 g-12">
-            <!-- Display rejected carriers -->
-            @foreach($rejectedCarriers as $carrier)
-            <div class="col">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">{{ $carrier->company_name }}</h5>
-                  <p class="card-text">Company Address: {{ $carrier->company_address }}</p>
-                  <p class="card-text">Contact Name: {{ $carrier->contact_name }}</p>
-                  <p class="card-text">Email: {{ $carrier->email }}</p>
-                  <p class="card-text">Phone: {{ $carrier->phone }}</p>
-                  <p class="card-text">Notes: {{ $carrier->notes ?? 'N/A' }}</p>
-                  <p class="card-text">Status: {{ $carrier->status }}</p>
-                  <hr>
-                  <p class="card-text">Certificate of Business Registration:</p>
-                  @if($carrier->certificate_of_business_registration_image)
-                    <img src="{{ $carrier->certificate_of_business_registration_image }}" alt="Certificate of Business Registration" style="max-width: 100%; height: auto;">
-                  @else
-                    <p>N/A</p>
-                  @endif
-                  <hr>
-                  <p class="card-text">Certificate of DTI:</p>
-                  @if($carrier->certificate_of_dti_image)
-                    <img src="{{ $carrier->certificate_of_dti_image }}" alt="Certificate of DTI" style="max-width: 100%; height: auto;">
-                  @else
-                    <p>N/A</p>
-                  @endif
-                  <hr>
-                  <p class="card-text">Business License:</p>
-                  @if($carrier->business_license_image)
-                    <img src="{{ $carrier->business_license_image }}" alt="Business License" style="max-width: 100%; height: auto;">
-                  @else
-                    <p>N/A</p>
-                  @endif
-                  <hr>
-                  <p class="card-text">Certificate of BIR:</p>
-                  @if($carrier->certificate_of_bir_image)
-                    <img src="{{ $carrier->certificate_of_bir_image }}" alt="Certificate of BIR" style="max-width: 100%; height: auto;">
-                  @else
-                    <p>N/A</p>
-                  @endif
-                  <hr>
-                  <p class="card-text">Certificate of Insurance:</p>
-                  @if($carrier->certificate_of_insurance_image)
-                    <img src="{{ $carrier->certificate_of_insurance_image }}" alt="Certificate of Insurance" style="max-width: 100%; height: auto;">
-                  @else
-                    <p>N/A</p>
-                  @endif
-                </div>
-              </div>
-            </div>
-            @endforeach
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 
       </div>
       <div class="card-body">
           <div class="table-responsive">
-              <table class="table">
-                  <thead>
+            <table class="table">
+              <thead>
+                  <tr>
+                      <th>Company Name</th>
+                      <th>Company Address</th>
+                      <th>Contact Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Certificate of Business Registration</th>
+                      <th>Certificate of DTI</th>
+                      <th>Business License</th>
+                      <th>Certificate of BIR</th>
+                      <th>Certificate of Insurance</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  @foreach($carriers as $carrier)
                       <tr>
-                          <th>Company Name</th>
-                          <th>Company Address</th>
-                          <th>Contact Name</th>
-                          <th>Email</th>
-                          <th>Phone</th>
-                          <th>Certificate of Business Registration</th>
-                          <th>Certificate of DTI</th>
-                          <th>Business License</th>
-                          <th>Certificate of BIR</th>
-                          <th>Certificate of Insurance</th>
-                          <th>Actions</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      @foreach($carriers as $carrier)
-                      <tr>
-                          <td>{{ $carrier->company_name }}</td>
-                          <td>{{ $carrier->company_address }}</td>
-                          <td>{{ $carrier->contact_name }}</td>
-                          <td>{{ $carrier->email }}</td>
-                          <td>{{ $carrier->phone }}</td>
+                          <td>{{ $carrier['companyName'] }}</td>
+                          <td>{{ $carrier['companyAddress'] }}</td>
+                          <td>{{ $carrier['contactName'] }}</td>
+                          <td>{{ $carrier['email'] }}</td>
+                          <td>{{ $carrier['phone'] }}</td>
                           <td>
-                              @if($carrier->certificate_of_business_registration_image)
-                              <img src="{{ $carrier->certificate_of_business_registration_image }}" alt="Certificate of Business Registration" style="max-width: 100px;">
-                              @else
-                              N/A
-                              @endif
-                          </td>
-                          <td>
-                              @if($carrier->certificate_of_dti_image)
-                              <img src="{{ $carrier->certificate_of_dti_image }}" alt="Certificate of DTI" style="max-width: 100px;">
-                              @else
-                              N/A
-                              @endif
-                          </td>
-                          <td>
-                              @if($carrier->business_license_image)
-                              <img src="{{ $carrier->business_license_image }}" alt="Business License" style="max-width: 100px;">
-                              @else
-                              N/A
-                              @endif
-                          </td>
-                          <td>
-                              @if($carrier->certificate_of_bir_image)
-                              <img src="{{ $carrier->certificate_of_bir_image }}" alt="Certificate of BIR" style="max-width: 100px;">
-                              @else
-                              N/A
-                              @endif
-                          </td>
-                          <td>
-                              @if($carrier->certificate_of_insurance_image)
-                              <img src="{{ $carrier->certificate_of_insurance_image }}" alt="Certificate of Insurance" style="max-width: 100px;">
-                              @else
-                              N/A
-                              @endif
-                          </td>
-                          <td>
-                              <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#notesAndStatusModal{{ $carrier->id }}">Notes & Status</button>
+                            @if(isset($carrier['certificateBusiness']))
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#certificateBusinessModal{{ $carrier['id'] }}">
+                                    <img src="{{ $carrier['certificateBusiness'] }}" alt="Certificate of Business Registration" style="max-width: 100px;">
+                                </a>
+                                <!-- Modal -->
+                                <div class="modal fade" id="certificateBusinessModal{{ $carrier['id'] }}" tabindex="-1" aria-labelledby="certificateBusinessModalLabel{{ $carrier['id'] }}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="certificateBusinessModalLabel{{ $carrier['id'] }}">Certificate of Business Registration</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <img src="{{ $carrier['certificateBusiness'] }}" alt="Certificate of Business Registration" style="max-width: 100%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                N/A
+                            @endif
+                        </td>
+                        
+                        <td>
+                          @if(isset($carrier['certificateDTI']))
+                              <a href="#" data-bs-toggle="modal" data-bs-target="#certificateDTIModal{{ $carrier['id'] }}">
+                                  <img src="{{ $carrier['certificateDTI'] }}" alt="Certificate of DTI" style="max-width: 100px;">
+                              </a>
                               <!-- Modal -->
-                              <div class="modal fade" id="notesAndStatusModal{{ $carrier->id }}" tabindex="-1" aria-labelledby="notesAndStatusModalLabel{{ $carrier->id }}" aria-hidden="true">
+                              <div class="modal fade" id="certificateDTIModal{{ $carrier['id'] }}" tabindex="-1" aria-labelledby="certificateDTIModalLabel{{ $carrier['id'] }}" aria-hidden="true">
                                   <div class="modal-dialog">
                                       <div class="modal-content">
                                           <div class="modal-header">
-                                              <h5 class="modal-title" id="notesAndStatusModalLabel{{ $carrier->id }}">Notes & Status</h5>
+                                              <h5 class="modal-title" id="certificateDTIModalLabel{{ $carrier['id'] }}">Certificate of DTI</h5>
                                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                           </div>
                                           <div class="modal-body">
-                                              <form action="{{ route('carriers.save-notes-status', ['id' => $carrier->id]) }}" method="POST">
-                                                  @csrf
-                                                  <div class="form-group">
-                                                      <textarea class="form-control mb-3" name="notes" rows="4" placeholder="Enter notes here..."></textarea>
-                                                      <div class="btn-group" role="group" aria-label="Status">
-                                                          <label class="btn btn-success">
-                                                              <input type="radio" name="status" value="approve"> Approve
-                                                          </label>
-                                                          <label class="btn btn-danger">
-                                                              <input type="radio" name="status" value="reject"> Reject
-                                                          </label>
-                                                          <label class="btn btn-info">
-                                                              <input type="radio" name="status" value="comply"> Comply
-                                                          </label>
-                                                      </div>
+                                              <img src="{{ $carrier['certificateDTI'] }}" alt="Certificate of DTI" style="max-width: 100%;">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          @else
+                              N/A
+                          @endif
+                      </td>
+                      
+                      <td>
+                        @if(isset($carrier['businessLicense']))
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#businessLicenseModal{{ $carrier['id'] }}">
+                                <img src="{{ $carrier['businessLicense'] }}" alt="Business License" style="max-width: 100px;">
+                            </a>
+                            <!-- Modal -->
+                            <div class="modal fade" id="businessLicenseModal{{ $carrier['id'] }}" tabindex="-1" aria-labelledby="businessLicenseModalLabel{{ $carrier['id'] }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="businessLicenseModalLabel{{ $carrier['id'] }}">Business License</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="{{ $carrier['businessLicense'] }}" alt="Business License" style="max-width: 100%;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                    
+                    <td>
+                      @if(isset($carrier['certificateBIR']))
+                          <a href="#" data-bs-toggle="modal" data-bs-target="#certificateBIRModal{{ $carrier['id'] }}">
+                              <img src="{{ $carrier['certificateBIR'] }}" alt="Certificate of BIR" style="max-width: 100px;">
+                          </a>
+                          <!-- Modal -->
+                          <div class="modal fade" id="certificateBIRModal{{ $carrier['id'] }}" tabindex="-1" aria-labelledby="certificateBIRModalLabel{{ $carrier['id'] }}" aria-hidden="true">
+                              <div class="modal-dialog">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h5 class="modal-title" id="certificateBIRModalLabel{{ $carrier['id'] }}">Certificate of BIR</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                          <img src="{{ $carrier['certificateBIR'] }}" alt="Certificate of BIR" style="max-width: 100%;">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      @else
+                          N/A
+                      @endif
+                  </td>
+                  
+                  <td>
+                    @if(isset($carrier['certificateInsurance']))
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#certificateInsuranceModal{{ $carrier['id'] }}">
+                            <img src="{{ $carrier['certificateInsurance'] }}" alt="Certificate of Insurance" style="max-width: 100px;">
+                        </a>
+                        <!-- Modal -->
+                        <div class="modal fade" id="certificateInsuranceModal{{ $carrier['id'] }}" tabindex="-1" aria-labelledby="certificateInsuranceModalLabel{{ $carrier['id'] }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="certificateInsuranceModalLabel{{ $carrier['id'] }}">Certificate of Insurance</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="{{ $carrier['certificateInsurance'] }}" alt="Certificate of Insurance" style="max-width: 100%;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        N/A
+                    @endif
+                </td>
+                
+                <td style="color: 
+                @if($carrier['status'] == 'Pending')
+                    orange;
+                @elseif($carrier['status'] == 'Approve')
+                    green;
+                @elseif($carrier['status'] == 'Rejecte')
+                    red;
+                @else
+                    black;
+                @endif">
+                {{ $carrier['status'] }}
+            </td>
+            
+                          <td>
+                              <!-- Button trigger modal -->
+                              <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#notesAndStatusModal{{ $carrier['id'] }}">Notes & Status</button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="notesAndStatusModal{{ $carrier['id'] }}" tabindex="-1" aria-labelledby="notesAndStatusModalLabel{{ $carrier['id'] }}" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                      <div class="modal-content">
+                                          <div class="modal-header">
+                                              <h5 class="modal-title" id="notesAndStatusModalLabel{{ $carrier['id'] }}">Notes & Status</h5>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <form action="{{ route('carriers.save-notes-status', ['id' => $carrier['id']]) }}" method="POST">
+                                              @csrf
+
+                                              <div class="form-group">
+                                                  <textarea class="form-control mb-3" name="notes" rows="4" placeholder="Enter notes here..."></textarea>
+                                                  <div class="btn-group" role="group" aria-label="Status">
+                                                      <label class="btn btn-success">
+                                                          <input type="radio" name="status" value="Approve"> Approve
+                                                      </label>
+                                                      <label class="btn btn-danger">
+                                                          <input type="radio" name="status" value="Reject"> Reject
+                                                      </label>
+                                                      <label class="btn btn-info">
+                                                          <input type="radio" name="status" value="Comply"> Comply
+                                                      </label>
                                                   </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                  <button type="submit" class="btn btn-primary">Save Notes & Status</button>
+                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                              </div>
+                                          </form>
 
-
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary">Save Notes & Status</button>
-                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                          </div>
-                                        </form>
                                       </div>
                                   </div>
                               </div>
                               <!-- End Modal -->
                           </td>
                       </tr>
-                      @endforeach
-                  </tbody>
-              </table>
+                  @endforeach
+              </tbody>
+          </table>
+
           </div>
       </div>
   </div>
 </div>
 
-
-<!-- Modal -->
-<div class="modal fade" id="approvedCarriersModal" tabindex="-1" aria-labelledby="approvedCarriersModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="approvedCarriersModalLabel">Approved Carriers</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="container mt-4">
-          <div class="row row-cols-12 row-cols-md-12 g-12">
-            @foreach($approvedCarriers as $carrier)
-            <div class="col">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">{{ $carrier->company_name }}</h5>
-                  <p class="card-text">Company Address: {{ $carrier->company_address }}</p>
-                  <p class="card-text">Contact Name: {{ $carrier->contact_name }}</p>
-                  <p class="card-text">Email: {{ $carrier->email }}</p>
-                  <p class="card-text">Phone: {{ $carrier->phone }}</p>
-                  <p class="card-text">Notes: {{ $carrier->notes ?? 'N/A' }}</p>
-                  <p class="card-text">Status: {{ $carrier->status }}</p>
-                  <hr>
-                  <p class="card-text">Certificate of Business Registration:</p>
-                  @if($carrier->certificate_of_business_registration_image)
-                    <img src="{{ $carrier->certificate_of_business_registration_image }}" alt="Certificate of Business Registration" style="max-width: 100%; height: auto;">
-                  @else
-                    <p>N/A</p>
-                  @endif
-                  <hr>
-                  <p class="card-text">Certificate of DTI:</p>
-                  @if($carrier->certificate_of_dti_image)
-                    <img src="{{ $carrier->certificate_of_dti_image }}" alt="Certificate of DTI" style="max-width: 100%; height: auto;">
-                  @else
-                    <p>N/A</p>
-                  @endif
-                  <hr>
-                  <p class="card-text">Business License:</p>
-                  @if($carrier->business_license_image)
-                    <img src="{{ $carrier->business_license_image }}" alt="Business License" style="max-width: 100%; height: auto;">
-                  @else
-                    <p>N/A</p>
-                  @endif
-                  <hr>
-                  <p class="card-text">Certificate of BIR:</p>
-                  @if($carrier->certificate_of_bir_image)
-                    <img src="{{ $carrier->certificate_of_bir_image }}" alt="Certificate of BIR" style="max-width: 100%; height: auto;">
-                  @else
-                    <p>N/A</p>
-                  @endif
-                  <hr>
-                  <p class="card-text">Certificate of Insurance:</p>
-                  @if($carrier->certificate_of_insurance_image)
-                    <img src="{{ $carrier->certificate_of_insurance_image }}" alt="Certificate of Insurance" style="max-width: 100%; height: auto;">
-                  @else
-                    <p>N/A</p>
-                  @endif
-                </div>
-              </div>
-            </div>
-            @endforeach
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  function saveNotesAndStatus(carrierId) {
-      var notes = document.getElementById('notes' + carrierId).value;
-      var status = document.querySelector('input[name="status"]:checked').value;
-
-      fetch('{{ route("carriers.save-notes-status", ["id" => ":id"]) }}'.replace(':id', carrierId), {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-TOKEN': '{{ csrf_token() }}'
-          },
-          body: JSON.stringify({ notes: notes, status: status })
-      })
-      .then(response => {
-          if (response.ok) {
-              alert('Notes and status saved successfully.');
-              location.reload();
-          } else {
-              alert('An error occurred while saving notes and status.');
-          }
-      })
-      .catch(error => {
-          console.error('Error:', error);
-      });
-  }
-</script>
-
-
+<!-- Original Modal Template -->
 @foreach ($transactions as $transaction)
-<!-- Modal -->
 <div class="modal fade" id="transactionModal{{ $transaction['id'] }}" tabindex="-1" role="dialog" aria-labelledby="transactionModal{{ $transaction['id'] }}Label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -490,7 +338,6 @@
             <div class="modal-body">
                 <!-- Store transaction details in hidden input field -->
                 <input type="hidden" id="transactionDetails{{ $transaction['id'] }}" value="{{ json_encode($transaction) }}">
-
                 <!-- Display transaction details -->
                 <p><strong>ID:</strong> {{ $transaction['id'] }}</p>
                 <p><strong>Reference:</strong> {{ $transaction['reference'] }}</p>
@@ -505,16 +352,98 @@
                 <!-- Add other transaction details as needed -->
 
                 <!-- Button to process into EDIFACT or ANSI-X12 -->
-                        </div>
+            </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-primary" onclick="processToEDIFACT({{ $transaction['id'] }})">Process to EDIFACT</button>
-
+                <!-- Button to trigger the Invoice Modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#invoiceModal{{ $transaction['id'] }}">
+      View Invoice
+  </button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 @endforeach
+
+@foreach ($transactions as $transaction)
+    <!-- Modal for Invoice -->
+    <div class="modal fade" id="invoiceModal{{ $transaction['id'] }}" tabindex="-1" role="dialog" aria-labelledby="invoiceModal{{ $transaction['id'] }}Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header bg-primary text-white" style="background-image: url('{{asset('assets/img/edi.jpg')}}'); background-size: cover; background-position: center;">
+                    <h5 class="modal-title" id="invoiceModal{{ $transaction['id'] }}Label">Invoice</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Invoice content here -->
+                    <div class="invoice">
+                        <div class="row">
+                            <div class="col-6">
+                                <h3>Invoice #{{ $transaction['id'] }}</h3>
+                            </div>
+                            <div class="col-6 text-end">
+                                <p class="invoice-date"><strong>Date:</strong> {{ \Carbon\Carbon::parse($transaction['transactionDate'])->format('F j, Y') }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="invoice-details">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Reference:</strong></td>
+                                        <td>{{ $transaction['reference'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Product Name:</strong></td>
+                                        <td>{{ $transaction['productName'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Transaction Name:</strong></td>
+                                        <td>{{ $transaction['transactionName'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Payment Method:</strong></td>
+                                        <td>{{ $transaction['paymentMethod'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Card Type:</strong></td>
+                                        <td>{{ $transaction['cardType'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Transaction Type:</strong></td>
+                                        <td>{{ $transaction['transactionType'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Transaction Amount:</strong></td>
+                                        <td>${{ number_format($transaction['transactionAmount'], 2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Transaction Date:</strong></td>
+                                        <td>{{ \Carbon\Carbon::parse($transaction['transactionDate'])->format('F j, Y') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Transaction Status:</strong></td>
+                                        <td>{{ $transaction['transactionStatus'] }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Print Invoice</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
+
+
+
+
+
 <!-- Modal for displaying EDIFACT data -->
 <div class="modal fade" id="edifactModal" tabindex="-1" role="dialog" aria-labelledby="edifactModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">

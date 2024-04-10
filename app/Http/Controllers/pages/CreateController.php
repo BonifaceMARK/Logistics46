@@ -17,25 +17,29 @@ use EDI\Mapper\Mapping;
 use EDI\Mapper\MappingFactory;
 use App\Models\LmsG50Carrier;
 use App\Models\Edifact;
+use Illuminate\Support\Facades\Redirect;
 
 class CreateController extends Controller
 {
 
   public function index()
   {
-    $carriers = LmsG50Carrier::all();
-    $rejectedCarriers = LmsG50Carrier::where('status', 'reject')->get();
-    $approvedCarriers = LmsG50Carrier::where('status', 'approve')->get();
-    $complyCarriers = LmsG50Carrier::where('status', 'comply')->get();
-    $response = Http::get('https://fms5-iasipgcc.fguardians-fms.com/payment');
-    $edifacts = Edifact::pluck('content')->toArray();
-    $edifactContent = Edifact::all();
-    if ($response->successful()) {
-        $transactions = $response->json();
+      $rejectedCarriers = LmsG50Carrier::where('status', 'reject')->get();
+      $approvedCarriers = LmsG50Carrier::where('status', 'approve')->get();
+      $complyCarriers = LmsG50Carrier::where('status', 'comply')->get();
+      $response = Http::get('https://fms5-iasipgcc.fguardians-fms.com/payment');
+      $edifacts = Edifact::pluck('content')->toArray();
+      $edifactContent = Edifact::all();
 
-    return view('content.pages.createdash', compact('edifacts','edifactContent','transactions','complyCarriers','rejectedCarriers','approvedCarriers','carriers'));
+      if ($response->successful()) {
+          $transactions = $response->json();
+          $carrierResponse = Http::get('https://carrier-g50.bbox-express.com/api/carrier');
+
+          $carriers = $carrierResponse->json();
+
+          return view('content.pages.CreateDash', compact('edifacts', 'carriers', 'edifactContent', 'transactions', 'complyCarriers', 'rejectedCarriers', 'approvedCarriers'));
+      }
   }
-}
 
 public function saveInvoice(Request $request)
 {
@@ -93,15 +97,23 @@ public function saveEdi(Request $request)
       // Return a response
       return response()->json(['success' => true]);
   }
-  public function saveNotesAndStatus(Request $request, $id)
-  {
-      $carrier = LmsG50Carrier::findOrFail($id);
-      $carrier->notes = $request->input('notes');
-      $carrier->status = $request->input('status');
-      $carrier->save();
-
-      return redirect()->back()->with('success', 'Notes and status saved successfully.');
-  }
+ public function update(Request $request, $id)
+ {
+     $notes = $request->input('notes');
+     $status = $request->input('status');
+ 
+     $response = Http::put("https://carrier-g50.bbox-express.com/api/carrier/{$id}", [
+         'notes' => $notes,
+         'status' => $status,
+     ]);
+ 
+     if ($response->successful()) {
+         return redirect()->back()->with('message', 'Carrier status updated successfully');
+     } else {
+         return redirect()->back()->with('error', 'Failed to update carrier status');
+     }
+ }
+ 
   public function storeChecklist(Request $request)
   {
           // Validate the request data

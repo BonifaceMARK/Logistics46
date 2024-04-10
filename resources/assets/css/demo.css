@@ -21,6 +21,66 @@
   width: 34px;
   height: 24px;
 }
+/* Custom CSS for Invoice Modal */
+.invoice {
+  border: 1px solid #ddd;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.invoice-header h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.invoice-date {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.invoice-details table {
+  width: 100%;
+}
+
+.invoice-details td {
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.invoice-details td:first-child {
+  width: 35%;
+  font-weight: bold;
+  color: #333;
+}
+
+.invoice-details td:last-child {
+  width: 65%;
+  color: #666;
+}
+
+.modal-header {
+  background-color: #007bff;
+  color: #fff;
+  border-bottom: none;
+}
+
+.btn-close {
+  color: #fff;
+  opacity: 1;
+}
+
+.btn-close:hover {
+  color: #fff;
+  opacity: 1;
+}
+
+.modal-footer {
+  border-top: none;
+}
+
 .violet-text-shadow {
   font-size: 80px;
   color: white;

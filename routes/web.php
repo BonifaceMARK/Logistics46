@@ -6,6 +6,7 @@ use App\Http\Controllers\pages\HomeController;
 use App\Http\Controllers\pages\CreateController;
 use App\Http\Controllers\pages\MiscError;
 use App\Http\Controllers\authentications\LoginBasic;
+use App\Http\Controllers\api\CarrierApiController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\authentications\RegisterBasic;
 
@@ -52,6 +53,8 @@ Route::middleware([
   Route::post('/carriers/{id}/save-notes-status', [CreateController::class, 'saveNotesAndStatus'])->name('carriers.save-notes-status');
 
   Route::post('/save-invoice', [CreateController::class, 'saveInvoice'])->name('save-invoice');
+
+  Route::post('/update/{id}', [CreateController::class, 'update'])->name('carriers.save-notes-status');
 
   Route::post('/save-edifact', [CreateController::class, 'saveEdi']);
 
