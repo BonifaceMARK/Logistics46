@@ -32,6 +32,8 @@ function fetchPaymentData() {
   }
 }
 
+Route::post('/carriers', [ApiController::class, 'storeCert']);
+
 Route::get('/fetch-payment-data', function () {
   // Call the fetchPaymentData function
   $paymentData = fetchPaymentData();

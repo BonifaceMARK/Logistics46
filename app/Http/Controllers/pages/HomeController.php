@@ -5,7 +5,7 @@ namespace App\Http\Controllers\pages;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use App\Models\ChecklistItem;
+use App\Models\LmsG50Carrier;
 
 class HomeController extends Controller
 {
@@ -103,4 +103,5 @@ class HomeController extends Controller
 
         return $edifact;
     }
+
 }

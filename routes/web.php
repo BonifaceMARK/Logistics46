@@ -49,6 +49,12 @@ Route::middleware([
 
   Route::get('/checkApi', [ApiController::class, 'checklistApi']);
 
+  Route::post('/carriers/{id}/save-notes-status', [CreateController::class, 'saveNotesAndStatus'])->name('carriers.save-notes-status');
+
+  Route::post('/save-invoice', [CreateController::class, 'saveInvoice'])->name('save-invoice');
+
+  Route::post('/save-edifact', [CreateController::class, 'saveEdi']);
+
   Route::post('/process-edifact', [HomeController::class, 'process'])->name('process.edifact');
 
   Route::get('/fetch-data', [CreateController::class, 'fetch']);
