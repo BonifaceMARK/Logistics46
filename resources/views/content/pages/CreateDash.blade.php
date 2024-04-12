@@ -166,7 +166,7 @@
                                 N/A
                             @endif
                         </td>
-                        
+
                         <td>
                           @if(isset($carrier['certificateDTI']))
                               <a href="#" data-bs-toggle="modal" data-bs-target="#certificateDTIModal{{ $carrier['id'] }}">
@@ -190,7 +190,7 @@
                               N/A
                           @endif
                       </td>
-                      
+
                       <td>
                         @if(isset($carrier['businessLicense']))
                             <a href="#" data-bs-toggle="modal" data-bs-target="#businessLicenseModal{{ $carrier['id'] }}">
@@ -214,7 +214,7 @@
                             N/A
                         @endif
                     </td>
-                    
+
                     <td>
                       @if(isset($carrier['certificateBIR']))
                           <a href="#" data-bs-toggle="modal" data-bs-target="#certificateBIRModal{{ $carrier['id'] }}">
@@ -238,7 +238,7 @@
                           N/A
                       @endif
                   </td>
-                  
+
                   <td>
                     @if(isset($carrier['certificateInsurance']))
                         <a href="#" data-bs-toggle="modal" data-bs-target="#certificateInsuranceModal{{ $carrier['id'] }}">
@@ -262,8 +262,8 @@
                         N/A
                     @endif
                 </td>
-                
-                <td style="color: 
+
+                <td style="color:
                 @if($carrier['status'] == 'Pending')
                     orange;
                 @elseif($carrier['status'] == 'Approve')
@@ -275,7 +275,7 @@
                 @endif">
                 {{ $carrier['status'] }}
             </td>
-            
+
                           <td>
                               <!-- Button trigger modal -->
                               <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#notesAndStatusModal{{ $carrier['id'] }}">Notes & Status</button>
@@ -371,11 +371,11 @@
     <div class="modal fade" id="invoiceModal{{ $transaction['id'] }}" tabindex="-1" role="dialog" aria-labelledby="invoiceModal{{ $transaction['id'] }}Label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
-              <div class="modal-header bg-primary text-white" style="background-image: url('{{asset('assets/img/edi.jpg')}}'); background-size: cover; background-position: center;">
+                <div class="modal-header bg-primary text-white" style="background-image: url('{{asset('assets/img/edi.jpg')}}'); background-size: cover; background-position: center;">
                     <h5 class="modal-title" id="invoiceModal{{ $transaction['id'] }}Label">Invoice</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="modalContent{{ $transaction['id'] }}">
                     <!-- Invoice content here -->
                     <div class="invoice">
                         <div class="row">
@@ -432,13 +432,34 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Print Invoice</button>
+                    <button type="button" class="btn btn-primary" onclick="printInvoice({{ $transaction['id'] }})">Print Invoice</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 @endforeach
+
+<script>
+    function printInvoice(transactionId) {
+        // Get the content of the modal
+        var modalContent = document.getElementById('modalContent' + transactionId).innerHTML;
+
+        // Open a new window
+        var printWindow = window.open('', '', 'height=600,width=800');
+
+        // Write the content to the new window
+        printWindow.document.write('<html><head><title>Print Invoice</title>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write('<h1>Invoice</h1>');
+        printWindow.document.write(modalContent);
+        printWindow.document.write('</body></html>');
+
+        // Print or save as PDF
+        printWindow.print();
+    }
+</script>
+
 
 
 
