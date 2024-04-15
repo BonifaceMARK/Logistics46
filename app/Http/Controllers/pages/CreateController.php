@@ -20,6 +20,7 @@ use App\Models\Edifact;
 use Illuminate\Support\Facades\Redirect;
 use App\Mail\approve;
 use App\Mail\rejected;
+
 use Illuminate\Support\Facades\Mail;
 
 class CreateController extends Controller
@@ -49,18 +50,31 @@ class CreateController extends Controller
   
 public function approve(Request $request)
 {
-  dd($request->email);
-  $response = Http::get('https://supplier-g49.bbox-express.com/api/Verified-vendors?id='. $request->id .'&status='. $request->status .'');
-  // Mail::to();
+    // Get the email from the request
+    $email = $request->email;
 
-  $message = json_decode($response);
-  if($message->message != 'Error!'){
-    return redirect()->back()->with('success', 'Vendor Succesfully Verified !');
-  } else {
-    return redirect()->back()->with('error', 'Something Went Wrong!');
-  }
+    // Perform the HTTP request to update the vendor status
+    $response = Http::get('https://supplier-g49.bbox-express.com/api/Verified-vendors?id='. $request->id .'&status='. $request->status .'');
+    
+    // Check if the request was successful
+    if ($response->successful()) {
+        // Extract the message from the response
+        $message = $response->json()['message'];
 
+        // Check if the message indicates success
+        if ($message != 'Error!') {
+            // Send email to the vendor
+            Mail::to($email)->send(new VendorApprovedMail());
+
+            return redirect()->back()->with('success', 'Vendor Successfully Verified!');
+        } else {
+            return redirect()->back()->with('error', 'Something Went Wrong!');
+        }
+    } else {
+        return redirect()->back()->with('error', 'Something Went Wrong with the API Request!');
+    }
 }
+
 public function saveInvoice(Request $request)
 {
     // Validate the request
