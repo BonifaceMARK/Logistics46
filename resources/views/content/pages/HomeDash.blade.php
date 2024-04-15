@@ -17,10 +17,10 @@
                   <div class="d-flex justify-content-between align-items-center">
                       <div class="d-flex align-items-center">
                           <img src="{{ asset('assets/img/logo/bbox-express-logo.png') }}" alt="Bbox Express Logo" class="img-fluid mr-3" style="max-width: 200px;">
-                          <h1 class="violet-text-shadow" style="font-size: 80px; color: rgb(79, 25, 110);"><strong>Bbox Express</strong></h1>
+                          <h1 class="violet-text-shadow" style="font-size: 80px; color: rgb(115, 72, 141);"><strong>Bbox Express</strong></h1>
                       </div>
                       <div class="row">
-                          <!-- Additional content if needed -->
+                         
                       </div>
                   </div>
               </div>

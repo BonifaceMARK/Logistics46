@@ -18,6 +18,9 @@ use EDI\Mapper\MappingFactory;
 use App\Models\LmsG50Carrier;
 use App\Models\Edifact;
 use Illuminate\Support\Facades\Redirect;
+use App\Mail\approve;
+use App\Mail\rejected;
+use Illuminate\Support\Facades\Mail;
 
 class CreateController extends Controller
 {
@@ -36,11 +39,28 @@ class CreateController extends Controller
           $carrierResponse = Http::get('https://carrier-g50.bbox-express.com/api/carrier');
 
           $carriers = $carrierResponse->json();
+          $response = Http::get('https://supplier-g49.bbox-express.com/api/vendors-unverified');
+          $vendors = $response->json();
 
-          return view('content.pages.CreateDash', compact('edifacts', 'carriers', 'edifactContent', 'transactions', 'complyCarriers', 'rejectedCarriers', 'approvedCarriers'));
+          return view('content.pages.CreateDash', compact('vendors','edifacts', 'carriers', 'edifactContent', 'transactions', 'complyCarriers', 'rejectedCarriers', 'approvedCarriers'));
       }
   }
 
+  
+public function approve(Request $request)
+{
+  dd($request->email);
+  $response = Http::get('https://supplier-g49.bbox-express.com/api/Verified-vendors?id='. $request->id .'&status='. $request->status .'');
+  // Mail::to();
+
+  $message = json_decode($response);
+  if($message->message != 'Error!'){
+    return redirect()->back()->with('success', 'Vendor Succesfully Verified !');
+  } else {
+    return redirect()->back()->with('error', 'Something Went Wrong!');
+  }
+
+}
 public function saveInvoice(Request $request)
 {
     // Validate the request
@@ -48,75 +68,73 @@ public function saveInvoice(Request $request)
         'content' => 'required|string',
     ]);
 
-    // Create a new Edifact instance
+   
     $edifact = new Edifact();
     $edifact->content = $request->input('content');
     $edifact->save();
 
-    // Return a response indicating success
     return response()->json(['message' => 'Invoice saved successfully'], 200);
 }
 
 
 public function saveEdi(Request $request)
 {
-    // Validate the request data
+
     $request->validate([
         'content' => 'required|string',
     ]);
 
     try {
-        // Save the EDIFACT content to the database
+ 
         Edifact::create([
             'content' => $request->input('content'),
         ]);
 
-        // Return a success response
         return response()->json(['message' => 'EDIFACT content saved successfully'], 200);
     } catch (\Exception $e) {
-        // Return an error response if something went wrong
+      
         return response()->json(['error' => 'Failed to save EDIFACT content'], 500);
     }
 }
 
   public function updateStatus(Request $request)
   {
-      // Validate the request data
+   
       $request->validate([
           'carrier_id' => 'required|integer',
           'status' => 'required|in:approve,reject,comply',
       ]);
 
-      // Find the carrier by ID
+    
       $carrier = LmsG50Carrier::findOrFail($request->carrier_id);
 
-      // Update the status
+   
       $carrier->status = $request->status;
       $carrier->save();
 
-      // Return a response
+  
       return response()->json(['success' => true]);
   }
  public function update(Request $request, $id)
  {
      $notes = $request->input('notes');
      $status = $request->input('status');
- 
+
      $response = Http::put("https://carrier-g50.bbox-express.com/api/carrier/{$id}", [
          'notes' => $notes,
          'status' => $status,
      ]);
- 
+
      if ($response->successful()) {
          return redirect()->back()->with('message', 'Carrier status updated successfully');
      } else {
          return redirect()->back()->with('error', 'Failed to update carrier status');
      }
  }
- 
+
   public function storeChecklist(Request $request)
   {
-          // Validate the request data
+ 
           $validatedData = $request->validate([
             'department' => 'required|string|max:255',
             'documentation_name' => 'required|string|max:255',
@@ -125,7 +143,6 @@ public function saveEdi(Request $request)
             'notes' => 'nullable|string|max:255',
         ]);
 
-        // Create a new checklist instance
         $checklist = new Checklist([
             'department' => $validatedData['department'],
             'documentation_name' => $validatedData['documentation_name'],
@@ -134,12 +151,11 @@ public function saveEdi(Request $request)
             'notes' => $validatedData['notes'],
         ]);
 
-        // Save the checklist to the database
         $checklist->save();
 
 
-      // Return the view with the created checklist item and other data
-      return view('content.pages.createdash', compact('checklist'));
+
+      return view('content.pages.CreateDash', compact('checklist'));
   }
 
 }

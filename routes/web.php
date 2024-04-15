@@ -64,4 +64,10 @@ Route::middleware([
   Route::get('/transactions/{id}',  [CreateController::class, 'showPayment'])->name('transactions.show');
   Route::post('/process-transaction', [CreateController::class, 'processTransactionToEdi'])->name('edi.process');
   Route::post('/checkliststore',  [CreateController::class, 'storeChecklist'])->name('checklist.store');
+
+  Route::get('/vendors', [CreateController::class, 'index']);
+
+  
+  Route::get('/approve', [CreateController::class, 'approve']);
+
 });
