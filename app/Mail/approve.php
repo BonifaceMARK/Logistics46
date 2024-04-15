@@ -37,7 +37,7 @@ class approve extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'mail.approve',
             with: ['name' => $this->name]
         );
     }

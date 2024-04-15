@@ -46,19 +46,23 @@ class CreateController extends Controller
       }
   }
 
-  
+
 public function approve(Request $request)
 {
-  dd($request->email);
-  $response = Http::get('https://supplier-g49.bbox-express.com/api/Verified-vendors?id='. $request->id .'&status='. $request->status .'');
-  // Mail::to();
+  // dd($request->email);
+  // $response = Http::get('https://supplier-g49.bbox-express.com/api/Verified-vendors?id='. $request->id .'&status='. $request->status .'');
+  $name = [
+    'name' => $request->email,
+];
+dd(Mail::to($request->email)->send(new approve($name)));
 
-  $message = json_decode($response);
-  if($message->message != 'Error!'){
+  // $message = json_decode($response);
+  // if($message->message != 'Error!'){
     return redirect()->back()->with('success', 'Vendor Succesfully Verified !');
-  } else {
-    return redirect()->back()->with('error', 'Something Went Wrong!');
-  }
+  // }
+  // else {
+    // return redirect()->back()->with('error', 'Something Went Wrong!');
+  // }
 
 }
 public function saveInvoice(Request $request)
@@ -68,7 +72,7 @@ public function saveInvoice(Request $request)
         'content' => 'required|string',
     ]);
 
-   
+
     $edifact = new Edifact();
     $edifact->content = $request->input('content');
     $edifact->save();
@@ -85,34 +89,34 @@ public function saveEdi(Request $request)
     ]);
 
     try {
- 
+
         Edifact::create([
             'content' => $request->input('content'),
         ]);
 
         return response()->json(['message' => 'EDIFACT content saved successfully'], 200);
     } catch (\Exception $e) {
-      
+
         return response()->json(['error' => 'Failed to save EDIFACT content'], 500);
     }
 }
 
   public function updateStatus(Request $request)
   {
-   
+
       $request->validate([
           'carrier_id' => 'required|integer',
           'status' => 'required|in:approve,reject,comply',
       ]);
 
-    
+
       $carrier = LmsG50Carrier::findOrFail($request->carrier_id);
 
-   
+
       $carrier->status = $request->status;
       $carrier->save();
 
-  
+
       return response()->json(['success' => true]);
   }
  public function update(Request $request, $id)
@@ -134,7 +138,7 @@ public function saveEdi(Request $request)
 
   public function storeChecklist(Request $request)
   {
- 
+
           $validatedData = $request->validate([
             'department' => 'required|string|max:255',
             'documentation_name' => 'required|string|max:255',

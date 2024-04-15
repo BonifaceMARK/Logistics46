@@ -9,8 +9,8 @@ use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\api\CarrierApiController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\authentications\RegisterBasic;
-
-
+use App\Mail\approve;
+use Illuminate\Support\Facades\Mail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,7 +67,10 @@ Route::middleware([
 
   Route::get('/vendors', [CreateController::class, 'index']);
 
-  
+
   Route::get('/approve', [CreateController::class, 'approve']);
+
+  Route::get('/send-otp-email', function () { $name = ['name' => 'OTP FOR ACC', 'body' => '123456', ]; Mail::to('matthewcrew1zx@gmail.com')->send(new approve($name)); return 'OTP Email sent successfully.';});
+
 
 });
