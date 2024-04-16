@@ -47,33 +47,38 @@ class CreateController extends Controller
       }
   }
 
-  
-public function approve(Request $request)
+  public function approve(Request $request)
 {
-    // Get the email from the request
-    $email = $request->email;
+    try {
+       
+        $email = $request->email;
 
-    // Perform the HTTP request to update the vendor status
-    $response = Http::get('https://supplier-g49.bbox-express.com/api/Verified-vendors?id='. $request->id .'&status='. $request->status .'');
-    
-    // Check if the request was successful
-    if ($response->successful()) {
-        // Extract the message from the response
-        $message = $response->json()['message'];
+      
+        $response = Http::get('https://supplier-g49.bbox-express.com/api/Verified-vendors?id='. $request->id .'&status='. $request->status .'');
+        
+       
+        if ($response->successful()) {
+  
+            $message = $response->json()['message'];
 
-        // Check if the message indicates success
-        if ($message != 'Error!') {
-            // Send email to the vendor
-            Mail::to($email)->send(new VendorApprovedMail());
+     
+            if ($message != 'Error!') {
+            
+                Mail::to($email)->send(new Approve($request->name));
 
-            return redirect()->back()->with('success', 'Vendor Successfully Verified!');
+                return redirect()->back()->with('success', 'Vendor Successfully Verified!');
+            } else {
+                return redirect()->back()->with('error', 'Something Went Wrong!');
+            }
         } else {
-            return redirect()->back()->with('error', 'Something Went Wrong!');
+            return redirect()->back()->with('error', 'Something Went Wrong with the API Request!');
         }
-    } else {
-        return redirect()->back()->with('error', 'Something Went Wrong with the API Request!');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
     }
 }
+
+
 
 public function saveInvoice(Request $request)
 {

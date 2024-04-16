@@ -17,6 +17,7 @@
 <body>
   <p>Hello, {{$name}}</p>
   <p>Welcome to Bbox Express!</p>
+  <p>Your Successfully Verified!</p>
   <p>Our new Vendor you may login now using this link <a href="https://supplier-g49.bbox-express.com/">https://supplier-g49.bbox-express.com/</a></p>
   <p class="signature">Gmail</p>
 </body>

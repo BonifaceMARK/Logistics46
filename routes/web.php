@@ -70,4 +70,5 @@ Route::middleware([
   
   Route::get('/approve', [CreateController::class, 'approve']);
 
+  Route::get('/reject', [CreateController::class, 'reject']);
 });

@@ -146,7 +146,13 @@
     <input type="text" class="d-none" name='email' value="{{$vendor['email']}}">
   <button type="submit" class="btn btn-primary" name="Approve">Approve</button>
 </form>
-<form action=""> <button type="submit" class="btn btn-primary" name="Reject">Reject</button></form>
+
+<form action="">
+  <input type="text" class="d-none" name='id' value="{{$vendor['id']}}">
+    <input type="text" class="d-none" name='status' value="Verified">
+    <input type="text" class="d-none" name='email' value="{{$vendor['email']}}">
+  <button type="submit" class="btn btn-primary" name="Reject">Reject</button>
+</form>
 
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#vendorModal" name="Comply">Comply</button>
 </div><!-- Modal -->
@@ -335,7 +341,7 @@
                     orange;
                 @elseif($carrier['status'] == 'Approve')
                     green;
-                @elseif($carrier['status'] == 'Rejecte')
+                @elseif($carrier['status'] == 'Rejected')
                     red;
                 @else
                     black;
