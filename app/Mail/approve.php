@@ -30,8 +30,29 @@ class approve extends Mailable
      */
     public function build()
     {
-        return $this->subject('Approve')
-                    ->view('emails.approve')
-                    ->with('name', $this->name);
+        return new Envelope(
+            subject: 'Approve',
+        );
+    }
+
+    /**
+     * Get the message content definition.
+     */
+    public function content(): Content
+    {
+        return new Content(
+            view: 'mail.approve',
+            with: ['name' => $this->name]
+        );
+    }
+
+    /**
+     * Get the attachments for the message.
+     *
+     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     */
+    public function attachments(): array
+    {
+        return [];
     }
 }
